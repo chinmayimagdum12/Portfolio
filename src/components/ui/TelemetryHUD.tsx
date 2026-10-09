@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
-import { ShieldCheck, Volume2, VolumeX, Terminal, Activity, Lock } from 'lucide-react';
+import { Volume2, VolumeX, Terminal, Activity, Lock } from 'lucide-react';
 import { sounds } from '../../utils/sound';
 
 interface TelemetryHUDProps {
   onOpenCommandPalette: () => void;
-  onOpenTerminalBot: () => void;
 }
 
 export const TelemetryHUD = ({
   onOpenCommandPalette,
-  onOpenTerminalBot,
 }: TelemetryHUDProps) => {
   const [audioActive, setAudioActive] = useState(sounds.isEnabled());
   const [latency, setLatency] = useState(14);
@@ -46,7 +44,7 @@ export const TelemetryHUD = ({
   return (
     <aside
       aria-label="Security Telemetry HUD"
-      className="hidden lg:flex fixed bottom-3 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2 bg-cyber-dark/90 backdrop-blur-md border border-cyber-cyan/30 rounded-full shadow-[0_0_20px_rgba(0,255,213,0.1)] text-xs font-mono"
+      className="hidden lg:flex fixed bottom-3 left-1/2 -translate-x-1/2 z-40 items-center gap-3 px-4 py-2 bg-cyber-dark/90 backdrop-blur-md border border-cyber-cyan/30 rounded-full shadow-[0_0_20px_rgba(0,255,213,0.12)] text-xs font-mono"
     >
       <div className="flex items-center gap-1.5 text-cyber-green">
         <span className="w-2 h-2 rounded-full bg-cyber-green animate-ping" />
@@ -75,24 +73,11 @@ export const TelemetryHUD = ({
           sounds.playClick();
           onOpenCommandPalette();
         }}
-        className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-cyber-cyan/10 hover:bg-cyber-cyan/20 text-cyber-cyan border border-cyber-cyan/30 transition-all text-[11px]"
+        className="btn-cyber-primary flex items-center gap-1.5 px-3 py-1 rounded text-[11px]"
         title="Open Security Command Console (Ctrl+K)"
       >
         <Terminal className="w-3 h-3" />
         <span>Ctrl+K</span>
-      </button>
-
-      {/* SOC Sentinel Bot Launcher */}
-      <button
-        onClick={() => {
-          sounds.playClick();
-          onOpenTerminalBot();
-        }}
-        className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-cyber-purple/10 hover:bg-cyber-purple/20 text-cyber-purple border border-cyber-purple/30 transition-all text-[11px]"
-        title="Chat with SOC Sentinel AI"
-      >
-        <ShieldCheck className="w-3 h-3" />
-        <span>SOC Bot</span>
       </button>
 
       {/* Audio toggle */}

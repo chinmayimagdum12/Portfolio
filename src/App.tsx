@@ -9,16 +9,15 @@ import Experience from './components/sections/Experience';
 import Certifications from './components/sections/Certifications';
 import Contact from './components/sections/Contact';
 import Footer from './components/layout/Footer';
+import ParticleNetwork from './components/ui/ParticleNetwork';
 import TelemetryHUD from './components/ui/TelemetryHUD';
 import CommandPalette from './components/ui/CommandPalette';
-import SocTerminalBot from './components/ui/SocTerminalBot';
 import ResumeModal from './components/ui/ResumeModal';
 import { sounds } from './utils/sound';
 
 function App() {
   const [isResumeOpen, setIsResumeOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
-  const [isTerminalBotOpen, setIsTerminalBotOpen] = useState(false);
 
   // Global keyboard shortcut: Ctrl+K / Cmd+K
   useEffect(() => {
@@ -35,6 +34,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-cyber-bg text-cyber-text relative selection:bg-cyber-cyan/30 selection:text-cyber-cyan">
+      {/* Global Persistent Cyber Background Across Entire Portfolio */}
+      <ParticleNetwork />
+
       {/* Navigation */}
       <Navbar
         onOpenResume={() => setIsResumeOpen(true)}
@@ -42,7 +44,7 @@ function App() {
       />
 
       {/* Main Sections */}
-      <main>
+      <main className="relative z-10">
         <Hero onOpenResume={() => setIsResumeOpen(true)} />
         <About />
         <Skills />
@@ -56,10 +58,9 @@ function App() {
       {/* Footer */}
       <Footer />
 
-      {/* Security Telemetry HUD ribbon (bottom fixed) */}
+      {/* Security Telemetry HUD ribbon (bottom fixed, without bot) */}
       <TelemetryHUD
         onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
-        onOpenTerminalBot={() => setIsTerminalBotOpen((prev) => !prev)}
       />
 
       {/* Interactive Command Console (Ctrl+K) */}
@@ -70,13 +71,6 @@ function App() {
         onOpenDefenseSimulator={() => {
           window.location.hash = '#simulator';
         }}
-      />
-
-      {/* Floating AI SOC Sentinel Bot */}
-      <SocTerminalBot
-        isOpen={isTerminalBotOpen}
-        onToggle={() => setIsTerminalBotOpen((prev) => !prev)}
-        onOpenResume={() => setIsResumeOpen(true)}
       />
 
       {/* ATS Resume Modal */}
