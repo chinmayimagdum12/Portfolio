@@ -27,7 +27,7 @@ export const ProjectModal = ({ project, onClose }: ProjectModalProps) => {
 
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 overflow-y-auto">
         {/* Backdrop */}
         <motion.div
           initial={{ opacity: 0 }}
