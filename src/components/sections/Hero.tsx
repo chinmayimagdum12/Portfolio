@@ -130,31 +130,11 @@ export const Hero = ({ onOpenResume }: HeroProps) => {
             <a
               href="#projects"
               onClick={() => sounds.playClick()}
-              className="btn-cyber-primary flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-bold"
+              className="btn-cyber-primary inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold shadow-[0_0_25px_rgba(0,255,213,0.3)]"
             >
               <ExternalLink className="w-4 h-4" />
-              <span>Explore 4 Projects</span>
+              <span>Explore Projects</span>
             </a>
-
-            <a
-              href="#simulator"
-              onClick={() => sounds.playClick()}
-              className="btn-cyber-purple flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-bold"
-            >
-              <Shield className="w-4 h-4" />
-              <span>VectorShield Simulator</span>
-            </a>
-
-            <button
-              onClick={() => {
-                sounds.playClick();
-                onOpenResume();
-              }}
-              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-cyber-dark/80 border border-cyber-border hover:border-cyber-cyan text-cyber-muted hover:text-white transition-all text-xs sm:text-sm font-mono"
-            >
-              <FileText className="w-4 h-4 text-cyber-cyan" />
-              <span>ATS Resume</span>
-            </button>
           </motion.div>
         </div>
 
