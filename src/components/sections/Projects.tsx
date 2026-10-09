@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ExternalLink,
   Github,
@@ -9,14 +9,25 @@ import {
   Lock,
   Leaf,
   Maximize2,
+  CheckCircle2,
+  Layers,
 } from 'lucide-react';
 import SectionHeader from '../ui/SectionHeader';
 import TiltCard from '../ui/TiltCard';
 import ProjectModal, { ProjectData } from '../ui/ProjectModal';
 import { sounds } from '../../utils/sound';
 
-const projectsData: ProjectData[] = [
+interface ExtendedProjectData extends ProjectData {
+  category: 'security' | 'mcp' | 'crypto' | 'ai';
+  categoryLabel: string;
+  metricBadge: string;
+}
+
+const projectsData: ExtendedProjectData[] = [
   {
+    category: 'security',
+    categoryLabel: 'Zero-Trust RAG Security',
+    metricBadge: '6-Layer Pipeline (L0–L5)',
     title: 'VectorShield',
     subtitle: 'Zero-Trust RAG Security Platform',
     description:
@@ -48,6 +59,9 @@ const projectsData: ProjectData[] = [
     ],
   },
   {
+    category: 'mcp',
+    categoryLabel: 'Database Security & MCP',
+    metricBadge: 'AST Read-Only Enforced',
     title: 'QueryPilot MCP',
     subtitle: 'PostgreSQL Read-Only Analyst Server',
     description:
@@ -76,6 +90,9 @@ const projectsData: ProjectData[] = [
     ],
   },
   {
+    category: 'crypto',
+    categoryLabel: 'Homomorphic Cryptography',
+    metricBadge: 'Paillier 2048-bit Modulus',
     title: 'Homomorphic Voting',
     subtitle: 'Encryption-Based Online Voting System',
     description:
@@ -104,6 +121,9 @@ const projectsData: ProjectData[] = [
     ],
   },
   {
+    category: 'ai',
+    categoryLabel: 'Computer Vision AI',
+    metricBadge: '96% Validation Accuracy',
     title: 'Paddy Leaf Disease Detection',
     subtitle: 'AI-Powered Diagnostic Computer Vision Engine',
     description:
@@ -134,52 +154,95 @@ const projectsData: ProjectData[] = [
 
 export const Projects = () => {
   const [activeProject, setActiveProject] = useState<ProjectData | null>(null);
+  const [activeFilter, setActiveFilter] = useState<string>('all');
+
+  const filtered =
+    activeFilter === 'all'
+      ? projectsData
+      : projectsData.filter((p) => p.category === activeFilter);
 
   return (
-    <section id="projects" className="py-24 px-4 relative cyber-grid">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" className="py-24 px-4 relative z-10">
+      <div className="max-w-7xl mx-auto">
         <SectionHeader
           number="03"
-          title="Security Projects"
-          subtitle="// threat.defense.showcase"
+          title="Engineered Security Projects"
+          subtitle="Zero-Trust Architecture, Cryptographic Privacy & Resilient AI Systems"
         />
 
-        <div className="grid md:grid-cols-2 gap-6">
-          {projectsData.map((p, i) => (
-            <motion.div
-              key={p.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.12 }}
+        {/* ─── Category Filter Tabs ─── */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-10 font-mono text-xs">
+          {[
+            { id: 'all', label: 'All Projects (4)' },
+            { id: 'security', label: 'Zero-Trust & RAG' },
+            { id: 'mcp', label: 'Database & MCP' },
+            { id: 'crypto', label: 'Homomorphic Paillier' },
+            { id: 'ai', label: 'Computer Vision AI' },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                sounds.playClick();
+                setActiveFilter(tab.id);
+              }}
+              className={`px-4 py-2 rounded-xl border transition-all ${
+                activeFilter === tab.id
+                  ? 'btn-cyber-primary shadow-[0_0_15px_rgba(0,255,213,0.3)]'
+                  : 'bg-cyber-dark/80 border-cyber-border text-cyber-muted hover:text-white hover:border-cyber-cyan/40'
+              }`}
             >
-              <TiltCard className="cyber-card rounded-xl overflow-hidden h-full flex flex-col">
-                {/* Header gradient */}
-                <div className={`p-6 bg-gradient-to-r ${p.gradient}`}>
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ─── Projects Grid ─── */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeFilter}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.3 }}
+            className="grid md:grid-cols-2 gap-7"
+          >
+            {filtered.map((p) => (
+              <TiltCard
+                key={p.title}
+                className="cyber-card rounded-2xl overflow-hidden h-full flex flex-col border border-cyber-border hover:border-cyber-cyan/50 shadow-[0_0_30px_rgba(0,255,213,0.06)]"
+              >
+                {/* Header Gradient Strip with Architectural Metric Tag */}
+                <div className={`p-6 sm:p-7 bg-gradient-to-r ${p.gradient} border-b border-cyber-border/70`}>
                   <div className="flex items-start justify-between mb-3">
-                    <div className="p-2.5 rounded-lg bg-cyber-bg/70 border border-cyber-border">
+                    <div className="p-3 rounded-xl bg-cyber-bg/80 border border-cyber-border">
                       <p.Icon className="w-6 h-6 text-cyber-cyan" />
                     </div>
-                    <div className="flex gap-2">
+
+                    <div className="flex items-center gap-2">
+                      <span className="px-3 py-1 rounded-full bg-cyber-dark/90 border border-cyber-cyan/40 text-[11px] font-mono text-cyber-cyan font-bold shadow-md">
+                        {p.metricBadge}
+                      </span>
+
                       <a
                         href={p.github}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={() => sounds.playClick()}
-                        className="p-2 rounded-lg bg-cyber-bg/70 border border-cyber-border text-cyber-muted hover:text-cyber-cyan hover:border-cyber-cyan/50 transition-all"
-                        aria-label="GitHub"
-                        title="View GitHub Repository"
+                        className="p-2.5 rounded-xl bg-cyber-bg/80 border border-cyber-border text-cyber-muted hover:text-cyber-cyan hover:border-cyber-cyan transition-all"
+                        aria-label="GitHub Repository"
+                        title="GitHub Repository"
                       >
                         <Github className="w-4 h-4" />
                       </a>
+
                       {p.demo && (
                         <a
                           href={p.demo}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={() => sounds.playClick()}
-                          className="p-2 rounded-lg bg-cyber-bg/70 border border-cyber-border text-cyber-muted hover:text-cyber-cyan hover:border-cyber-cyan/50 transition-all shadow-[0_0_10px_rgba(0,255,213,0.15)]"
-                          aria-label="Live demo"
+                          className="btn-cyber-primary p-2.5 rounded-xl flex items-center justify-center text-cyber-cyan shadow-[0_0_12px_rgba(0,255,213,0.3)]"
+                          aria-label="Launch Live Demo"
                           title="Launch Live Demo"
                         >
                           <ExternalLink className="w-4 h-4" />
@@ -187,26 +250,30 @@ export const Projects = () => {
                       )}
                     </div>
                   </div>
-                  <h3 className="text-xl font-bold font-mono text-white">
+
+                  <h3 className="text-xl sm:text-2xl font-bold font-mono text-white">
                     {p.title}
                   </h3>
-                  <p className="text-sm font-mono text-cyber-cyan mt-1">
+                  <p className="text-xs sm:text-sm font-mono text-cyber-cyan mt-1 font-semibold">
                     {p.subtitle}
                   </p>
                 </div>
 
-                {/* Body */}
-                <div className="p-6 flex-1 flex flex-col justify-between">
+                {/* Body Content */}
+                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                   <div>
-                    <p className="text-sm text-cyber-muted leading-relaxed mb-4">
+                    <p className="text-xs sm:text-sm text-cyber-muted font-sans leading-relaxed mb-5">
                       {p.description}
                     </p>
 
-                    {/* Highlights */}
-                    <div className="space-y-1.5 mb-5">
+                    {/* Architectural Highlights */}
+                    <div className="space-y-2 mb-6">
+                      <span className="text-[11px] font-mono text-cyber-cyan font-bold block uppercase tracking-wider">
+                        Key Defensive Mechanisms:
+                      </span>
                       {p.highlights.map((h) => (
-                        <div key={h} className="flex items-center gap-2 text-xs">
-                          <ChevronRight className="w-3 h-3 text-cyber-green flex-shrink-0" />
+                        <div key={h} className="flex items-center gap-2 text-xs font-mono">
+                          <ChevronRight className="w-3.5 h-3.5 text-cyber-green flex-shrink-0" />
                           <span className="text-cyber-text">{h}</span>
                         </div>
                       ))}
@@ -214,12 +281,12 @@ export const Projects = () => {
                   </div>
 
                   <div>
-                    {/* Tech tags */}
-                    <div className="flex flex-wrap gap-1.5 mb-4">
+                    {/* Technology Stack Tags */}
+                    <div className="flex flex-wrap gap-1.5 mb-5 font-mono">
                       {p.tech.map((t) => (
                         <span
                           key={t}
-                          className="px-2.5 py-0.5 text-[11px] font-mono rounded bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/20"
+                          className="px-2.5 py-1 text-[11px] rounded-lg bg-cyber-cyan/10 text-cyber-cyan border border-cyber-cyan/25"
                         >
                           {t}
                         </span>
@@ -232,17 +299,17 @@ export const Projects = () => {
                         sounds.playClick();
                         setActiveProject(p);
                       }}
-                      className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-cyber-card border border-cyber-border hover:border-cyber-cyan/50 hover:bg-cyber-cyan/10 text-xs font-mono text-cyber-text hover:text-cyber-cyan transition-all"
+                      className="btn-cyber-primary w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl text-xs font-bold font-mono"
                     >
                       <Maximize2 className="w-3.5 h-3.5" />
-                      <span>Inspect Security Architecture</span>
+                      <span>Inspect Security Architecture &amp; Controls</span>
                     </button>
                   </div>
                 </div>
               </TiltCard>
-            </motion.div>
-          ))}
-        </div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Project Inspector Modal */}

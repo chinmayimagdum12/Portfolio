@@ -99,28 +99,28 @@ body {
   background-clip: text;
 }
 
-/* ── Cyber card ──────────────────────────── */
+/* ── Cyber card with Tech Corner Accents ─── */
 .cyber-card {
   position: relative;
-  background: rgba(18, 18, 28, 0.75);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 255, 213, 0.12);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: rgba(18, 18, 28, 0.78);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 255, 213, 0.15);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .cyber-card::before {
   content: '';
   position: absolute;
   inset: -1px;
-  background: linear-gradient(135deg, rgba(0,255,213,0.6), transparent 50%, rgba(181,55,242,0.6));
+  background: linear-gradient(135deg, rgba(0,255,213,0.5), transparent 50%, rgba(181,55,242,0.5));
   border-radius: inherit;
   z-index: -1;
   opacity: 0;
   transition: opacity 0.35s ease;
 }
 .cyber-card:hover {
-  border-color: rgba(0, 255, 213, 0.35);
+  border-color: rgba(0, 255, 213, 0.4);
   transform: translateY(-4px);
-  box-shadow: 0 10px 30px -10px rgba(0, 255, 213, 0.2);
+  box-shadow: 0 15px 35px -10px rgba(0, 255, 213, 0.22);
 }
 .cyber-card:hover::before { opacity: 1; }
 
@@ -128,12 +128,12 @@ body {
 .btn-cyber-primary {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(0, 255, 213, 0.15), rgba(0, 210, 255, 0.05));
-  border: 1px solid rgba(0, 255, 213, 0.5);
+  background: linear-gradient(135deg, rgba(0, 255, 213, 0.18), rgba(0, 210, 255, 0.08));
+  border: 1px solid rgba(0, 255, 213, 0.6);
   color: #00ffd5;
   font-family: 'JetBrains Mono', monospace;
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(0, 255, 213, 0.15);
+  box-shadow: 0 0 18px rgba(0, 255, 213, 0.2);
 }
 .btn-cyber-primary::before {
   content: '';
@@ -142,13 +142,13 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-  transition: left 0.6s ease;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transition: left 0.5s ease;
 }
 .btn-cyber-primary:hover {
-  background: linear-gradient(135deg, rgba(0, 255, 213, 0.28), rgba(0, 210, 255, 0.15));
+  background: linear-gradient(135deg, rgba(0, 255, 213, 0.35), rgba(0, 210, 255, 0.2));
   border-color: #00ffd5;
-  box-shadow: 0 0 25px rgba(0, 255, 213, 0.45), inset 0 0 15px rgba(0, 255, 213, 0.2);
+  box-shadow: 0 0 30px rgba(0, 255, 213, 0.55), inset 0 0 15px rgba(0, 255, 213, 0.25);
   transform: translateY(-2px);
   color: #ffffff;
 }
@@ -162,12 +162,12 @@ body {
 .btn-cyber-purple {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, rgba(181, 55, 242, 0.15), rgba(120, 50, 220, 0.05));
-  border: 1px solid rgba(181, 55, 242, 0.5);
+  background: linear-gradient(135deg, rgba(181, 55, 242, 0.18), rgba(120, 50, 220, 0.08));
+  border: 1px solid rgba(181, 55, 242, 0.6);
   color: #d884fc;
   font-family: 'JetBrains Mono', monospace;
   transition: all 0.3s ease;
-  box-shadow: 0 0 15px rgba(181, 55, 242, 0.15);
+  box-shadow: 0 0 18px rgba(181, 55, 242, 0.2);
 }
 .btn-cyber-purple::before {
   content: '';
@@ -176,13 +176,13 @@ body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
-  transition: left 0.6s ease;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transition: left 0.5s ease;
 }
 .btn-cyber-purple:hover {
-  background: linear-gradient(135deg, rgba(181, 55, 242, 0.28), rgba(120, 50, 220, 0.15));
+  background: linear-gradient(135deg, rgba(181, 55, 242, 0.35), rgba(120, 50, 220, 0.2));
   border-color: #b537f2;
-  box-shadow: 0 0 25px rgba(181, 55, 242, 0.45), inset 0 0 15px rgba(181, 55, 242, 0.2);
+  box-shadow: 0 0 30px rgba(181, 55, 242, 0.55), inset 0 0 15px rgba(181, 55, 242, 0.25);
   transform: translateY(-2px);
   color: #ffffff;
 }
@@ -220,3 +220,15 @@ body {
   50% { opacity: 0.8; }
 }
 .animate-cyber-pulse { animation: cyber-pulse 3s ease-in-out infinite; }
+
+/* ── Traveling Circuit Energy Pulse ──────── */
+@keyframes circuit-travel {
+  0% { stroke-dashoffset: 200; opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+.animate-circuit-pulse {
+  stroke-dasharray: 40 160;
+  animation: circuit-travel 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}

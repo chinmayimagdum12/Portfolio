@@ -10,6 +10,7 @@ import Certifications from './components/sections/Certifications';
 import Contact from './components/sections/Contact';
 import Footer from './components/layout/Footer';
 import ParticleNetwork from './components/ui/ParticleNetwork';
+import CyberCursor from './components/ui/CyberCursor';
 import TelemetryHUD from './components/ui/TelemetryHUD';
 import CommandPalette from './components/ui/CommandPalette';
 import ResumeModal from './components/ui/ResumeModal';
@@ -34,6 +35,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-cyber-bg text-cyber-text relative selection:bg-cyber-cyan/30 selection:text-cyber-cyan">
+      {/* Interactive Cyber Mouse Cursor */}
+      <CyberCursor />
+
       {/* Global Persistent Cyber Background Across Entire Portfolio */}
       <ParticleNetwork />
 
