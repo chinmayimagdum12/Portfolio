@@ -29,9 +29,9 @@ const Footer = () => (
         </a>
       </div>
 
-      <p className="text-xs font-mono text-cyber-muted flex items-center gap-1">
-        Crafted with <Heart className="w-3 h-3 text-red-500 fill-red-500" /> &amp; secure code
-      </p>
+      <span className="text-xs font-mono text-cyber-muted">
+        Zero-Trust Architecture &bull; Belagavi, Karnataka
+      </span>
     </div>
   </footer>
 );

@@ -130,10 +130,39 @@ export const Hero = ({ onOpenResume }: HeroProps) => {
             <a
               href="#projects"
               onClick={() => sounds.playClick()}
-              className="btn-cyber-primary inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl text-sm font-bold shadow-[0_0_25px_rgba(0,255,213,0.3)]"
+              className="btn-cyber-primary flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-bold shadow-[0_0_20px_rgba(0,255,213,0.25)]"
             >
               <ExternalLink className="w-4 h-4" />
               <span>Explore Projects</span>
+            </a>
+
+            <a
+              href="#simulator"
+              onClick={() => sounds.playClick()}
+              className="btn-cyber-purple flex items-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-bold shadow-[0_0_20px_rgba(181,55,242,0.25)]"
+            >
+              <Shield className="w-4 h-4" />
+              <span>VectorShield Lab</span>
+            </a>
+
+            <button
+              onClick={() => {
+                sounds.playClick();
+                onOpenResume();
+              }}
+              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-cyber-dark/80 border border-cyber-border hover:border-cyber-cyan text-cyber-muted hover:text-white transition-all text-xs sm:text-sm font-mono"
+            >
+              <FileText className="w-4 h-4 text-cyber-cyan" />
+              <span>ATS Resume</span>
+            </button>
+
+            <a
+              href="#contact"
+              onClick={() => sounds.playClick()}
+              className="flex items-center gap-2 px-5 py-3 rounded-xl bg-cyber-card/60 border border-cyber-border hover:border-cyber-cyan text-cyber-muted hover:text-white transition-all text-xs sm:text-sm font-mono"
+            >
+              <Activity className="w-4 h-4 text-cyber-green" />
+              <span>Get In Touch</span>
             </a>
           </motion.div>
         </div>
